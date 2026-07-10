@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ကားဝန်ဆောင်မှု - တိုးပဒေသာ</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Bus Service Page Extra Styles */
+        .bus-service {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .bus-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .bus-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .bus-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .bus-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .bus-card:hover .bus-image img {
+            transform: scale(1.1);
+        }
+
+        .bus-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gold);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .bus-info {
+            padding: 30px;
+        }
+
+        .bus-info h3 {
+            font-size: 24px;
+            color: var(--maroon);
+            margin-bottom: 5px;
+        }
+
+        .bus-type {
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .bus-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .bus-features li {
+            padding: 10px 0;
+            color: #555;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+
+        .bus-features li::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .bus-price {
+            background: linear-gradient(135deg, var(--light-gold), #fff);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid var(--gold);
+        }
+
+        .price {
+            font-weight: bold;
+            color: var(--maroon);
+            font-size: 1.2rem;
+        }
+
+        .price-note {
+            font-size: 13px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .btn-book {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+            color: var(--white);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 160, 23, 0.4);
+        }
+
+        .booking-section {
+            background: linear-gradient(135deg, var(--maroon), var(--dark));
+            color: var(--white);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .booking-section h3 {
+            color: var(--gold);
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .contact-highlight {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .btn-messenger {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 35px;
+            background: #0084ff;
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-messenger:hover {
+            background: #0066cc;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 2px solid var(--gold);
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            .bus-grid {
+                grid-template-columns: 1fr;
+            }
+            .booking-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" style="padding: 60px 20px; position: relative;">
+        <a href="index.html" class="back-btn">← မူလစာမျက်နှာသို့</a>
+        <h1 style="font-size: 42px; margin-bottom: 10px;">🚌 ကားဝန်ဆောင်မှု</h1>
+        <p class="subtitle">Tour Padaythar Bus Services</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">🙏 တိုးပဒေသာ</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">အကြောင်း</a></li>
+                <li><a href="index.html#services">ဝန်ဆောင်မှုများ</a></li>
+                <li><a href="index.html#tours">ခရီးစဉ်များ</a></li>
+                <li><a href="index.html#contact">ဆက်သွယ်ရန်</a></li>
+            </ul>
+            <div class="mobile-menu">☰</div>
+        </div>
+    </nav>
+
+    <!-- Bus Service Section -->
+    <section class="bus-service">
+        <h2 class="section-title">ကျွန်ုပ်တို့၏ ကားဝန်ဆောင်မှု</h2>
+        <p class="section-subtitle">ဗုဒ္ဓဂယာ နှင့် ဘုရားဖူးခရီးစဉ်များအတွက် အဆင်သင့် ကားဝန်ဆောင်မှုများ</p>
+
+        <div class="bus-grid">
+            <!-- Bus 1: VIP Luxury Bus -->
+            <div class="bus-card">
+                <div class="bus-image">
+                    <img src="C:\Users\HUAWEI\Desktop\repo\images\urbaniabus.jpg" alt="Urbania force">
+                    <span class="bus-badge">အထူး</span>
+                </div>
+                <div class="bus-info">
+                    <h3>VIP Luxury Bus</h3>
+                    <p class="bus-type">Urbania foce</p>
+                    <ul class="bus-features">
+                        <li>Free WiFi</li>
+                        <li>Individual TV / Entertainment</li>
+                        <li>အစားအသောက် ဝန်ဆောင်မှု</li>
+                        <li>အပြည့်အဝ Air Condition</li>
+                        <li>USB Charging Port</li>
+                        
+                    </ul>
+                    <!--<div class="bus-price">
+                        <span class="price">စျေးနှုန်း: အထူး</span>
+                        <p class="price-note">ခရီးစဉ်အလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>-->
+                </div>
+            </div>
+            <!-- Bus 1: VIP Luxury Bus -->
+            <div class="bus-card">
+                <div class="bus-image">
+                    <img src="C:\Users\HUAWEI\Desktop\repo\images\urbani.jpeg" alt="Urbania force">
+                    <span class="bus-badge">ကားအတွင်းခန်း</span>
+                </div>
+                <div class="bus-info">
+                    <h3>VIP Luxury Bus</h3>
+                    <p class="bus-type">Urbania foce</p>
+                    <ul class="bus-features">
+                        <li>Free WiFi</li>
+                        <li>Individual TV / Entertainment</li>
+                        <li>အစားအသောက် ဝန်ဆောင်မှု</li>
+                        <li>အပြည့်အဝ Air Condition</li>
+                        <li>USB Charging Port</li>
+                        
+                    </ul>
+                    <!--<div class="bus-price">
+                        <span class="price">စျေးနှုန်း: အထူး</span>
+                        <p class="price-note">ခရီးစဉ်အလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>-->
+                </div>
+            </div>
+             <!-- Bus 1: VIP Luxury Bus -->
+            <div class="bus-card">
+                <div class="bus-image">
+                    <img src="C:\Users\HUAWEI\Desktop\repo\images\10180_67_1.png" alt="Mini Bus">
+                    <span class="bus-badge">အထူး</span>
+                </div>
+                <div class="bus-info">
+                    <h3>Mini Bus</h3>
+                    <p class="bus-type">Mini Bus</p>
+                    <ul class="bus-features">
+                        <li>Free WiFi</li>
+                        <li>Individual TV / Entertainment</li>
+                        <li>အစားအသောက် ဝန်ဆောင်မှု</li>
+                        <li>အပြည့်အဝ Air Condition</li>
+                        <li>USB Charging Port</li>
+                        
+                    </ul>
+                    <!--<div class="bus-price">
+                        <span class="price">စျေးနှုန်း: အထူး</span>
+                        <p class="price-note">ခရီးစဉ်အလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>-->
+                </div>
+            </div>
+            <!-- Bus 1: VIP Luxury Bus -->
+            <div class="bus-card">
+                <div class="bus-image">
+                    <img src="C:\Users\HUAWEI\Desktop\repo\images\minibusinside.jpg" alt="Mini Bus">
+                    <span class="bus-badge">ကားအတွင်းခန်း</span>
+                </div>
+                <div class="bus-info">
+                    <h3>VIP Luxury Bus</h3>
+                    <p class="bus-type">Urbania foce</p>
+                    <ul class="bus-features">
+                        <li>Free WiFi</li>
+                        <li>Individual TV / Entertainment</li>
+                        <li>အစားအသောက် ဝန်ဆောင်မှု</li>
+                        <li>အပြည့်အဝ Air Condition</li>
+                        <li>USB Charging Port</li>
+                        
+                    </ul>
+                    <!--<div class="bus-price">
+                        <span class="price">စျေးနှုန်း: အထူး</span>
+                        <p class="price-note">ခရီးစဉ်အလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>-->
+                </div>
+            </div>
+
+
+
+            <!-- Bus 2: AC Sleeper Bus --
+            <div class="bus-card">
+                <div class="bus-image">
+                    <img src="https://kimi-web-img.moonshot.cn/img/urbancruise.in/fe48b9dfcaf9581853cf7431055c597031c9a58c.webp" alt="AC Sleeper Bus">
+                    <span class="bus-badge">လူကြိုက်များဆုံး</span>
+                </div>
+                <div class="bus-info">
+                    <h3>AC Sleeper Bus</h3>
+                    <p class="bus-type">Volvo Double Decker - 2+2 အထိုင်အဆင့်</p>
+                    <ul class="bus-features">
+                        <li>အိပ်ခန်းပါဝင် (Sleeper Berth)</li>
+                        <li>AC ပါဝင်</li>
+                        <li>USB Charging Port</li>
+                        <li>Reading Light</li>
+                        <li>Curtain Privacy</li>
+                        <li>အေးခံသောက်</li>
+                    </ul>
+                    <div class="bus-price">
+                        <span class="price">စျေးနှုန်း: သက်သာသည်</span>
+                        <p class="price-note">ခရီးစဉ်အလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>
+                </div>
+            </div>
+
+            <!-- Bus 3: Tempo Traveller (Luxury) --
+            <div class="bus-card">
+                <div class="bus-image">
+                    <img src="https://kimi-web-img.moonshot.cn/img/tempotravellerindia.com/b5ccf4619bc1e2c29db14a320accca0800a6abe4.jpg" alt="Tempo Traveller Luxury">
+                    <span class="bus-badge">အထူး</span>
+                </div>
+                <div class="bus-info">
+                    <h3>Tempo Traveller (Luxury)</h3>
+                    <p class="bus-type">12-15 Seater - အထူးခုံများ</p>
+                    <ul class="bus-features">
+                        <li>Leather Push-back Seats</li>
+                        <li>LED Interior Lighting</li>
+                        <li>Music System</li>
+                        <li>AC ပါဝင်</li>
+                        <li>USB Charging Port</li>
+                        <li>အုပ်စုခရီးစဉ်အတွက် အကောင်းဆုံး</li>
+                    </ul>
+                    <div class="bus-price">
+                        <span class="price">စျေးနှုန်း: စေ့စေ့စပ်စပ်</span>
+                        <p class="price-note">အုပ်စုအလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>
+                </div>
+            </div>
+
+            <!-- Bus 4: Standard AC Traveller --
+            <div class="bus-card">
+                <div class="bus-image">
+                    <img src="https://kimi-web-img.moonshot.cn/img/5.imimg.com/932ddfa12b15b5c5abd8a3dd8712961551adad1f.jpg" alt="Standard AC Traveller">
+                </div>
+                <div class="bus-info">
+                    <h3>Standard AC Traveller</h3>
+                    <p class="bus-type">Force Traveller - 15 Seater</p>
+                    <ul class="bus-features">
+                        <li>Air Condition</li>
+                        <li>အဆင်ပြေသော အထိုင်ခုံများ</li>
+                        <li>Luggage အခွင့်</li>
+                        <li>Experienced Driver</li>
+                        <li>On-time Service</li>
+                        <li>အာမခံထားရှိ</li>
+                    </ul>
+                    <div class="bus-price">
+                        <span class="price">စျေးနှုန်း: အရမ်းသက်သာ</span>
+                        <p class="price-note">ခရီးစဉ်အလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>
+                </div>
+            </div>
+
+            <!-- Bus 5: Mini Tempo Traveller --
+            <div class="bus-card">
+                <div class="bus-image">
+                    <img src="https://kimi-web-img.moonshot.cn/img/5.imimg.com/9732b998c1a5cf1a3b4e2b09b86ef5fb21be6c4f.jpg" alt="Mini Tempo Traveller">
+                </div>
+                <div class="bus-info">
+                    <h3>Mini Tempo Traveller</h3>
+                    <p class="bus-type">12-15 Seater - အုပ်စုခရီးစဉ်</p>
+                    <ul class="bus-features">
+                        <li>12-15 ဦး အထိ</li>
+                        <li>လိုအပ်သလို လမ်းကြောင်း</li>
+                        <li>Driver + Guide</li>
+                        <li>အချိန်အလိုက်</li>
+                        <li>AC ပါဝင်</li>
+                        <li>Flexible Schedule</li>
+                    </ul>
+                    <div class="bus-price">
+                        <span class="price">စျေးနှုန်း: စေ့စေ့စပ်စပ်</span>
+                        <p class="price-note">အုပ်စုအလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>
+                </div>
+            </div>-->
+        </div>
+
+        <!-- Booking Section -->
+        <div class="booking-section">
+            <h3>📞 ကားလက်မှတ် မှာယူရန်</h3>
+            <p>ဆက်သွယ်ရန်: <span class="contact-highlight">09-781888840 ,09-250150552</span></p>
+            <p>Viber: <span class="contact-highlight">09-781888840 ,09-250150552</span></p>
+            <p>Email: <span class="contact-highlight">tourpadaythar@gmail.com</span></p>
+            <p>Facebook: <span class="contact-highlight">Tour Padaythar</span></p>
+            <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-messenger">
+                📘 Facebook Messenger ဖြင့် ဆက်သွယ်ရန်
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>🙏 တိုးပဒေသာ (Tour Padaythar) - ဗုဒ္ဓဂယာ နှင့် ဘုရားဖူးခရီးစဉ်များ</p>
+        <p style="font-size: 12px;">© 2026 Tour Padaythar. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

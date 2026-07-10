@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>လေယာဉ် ဝန်ဆောင်မှု - တိုးပဒေသာ</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Flight Service Page Extra Styles */
+        .flight-service {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .flight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .flight-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .flight-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e3a5f, #0d2137);
+        }
+
+        .flight-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .flight-card:hover .flight-image img {
+            transform: scale(1.1);
+        }
+
+        .flight-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gold);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .flight-info {
+            padding: 30px;
+        }
+
+        .flight-info h3 {
+            font-size: 24px;
+            color: var(--maroon);
+            margin-bottom: 5px;
+        }
+
+        .flight-type {
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .flight-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .flight-features li {
+            padding: 10px 0;
+            color: #555;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+
+        .flight-features li::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .flight-price {
+            background: linear-gradient(135deg, var(--light-gold), #fff);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid var(--gold);
+        }
+
+        .price {
+            font-weight: bold;
+            color: var(--maroon);
+            font-size: 1.2rem;
+        }
+
+        .price-note {
+            font-size: 13px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .btn-book {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+            color: var(--white);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 160, 23, 0.4);
+        }
+
+        .booking-section {
+            background: linear-gradient(135deg, var(--maroon), var(--dark));
+            color: var(--white);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .booking-section h3 {
+            color: var(--gold);
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .contact-highlight {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .btn-messenger {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 35px;
+            background: #0084ff;
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-messenger:hover {
+            background: #0066cc;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 2px solid var(--gold);
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--gold);
+        }
+
+        .route-info {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .route-info p {
+            color: #555;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .route-info strong {
+            color: var(--maroon);
+        }
+
+        @media (max-width: 768px) {
+            .flight-grid {
+                grid-template-columns: 1fr;
+            }
+            .booking-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" style="padding: 60px 20px; position: relative;">
+        <a href="index.html" class="back-btn">← မူလစာမျက်နှာသို့</a>
+        <h1 style="font-size: 42px; margin-bottom: 10px;">✈️ လေယာဉ် ဝန်ဆောင်မှု</h1>
+        <p class="subtitle">Tour Padaythar Flight Services</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">🙏 တိုးပဒေသာ</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">အကြောင်း</a></li>
+                <li><a href="index.html#services">ဝန်ဆောင်မှုများ</a></li>
+                <li><a href="index.html#tours">ခရီးစဉ်များ</a></li>
+                <li><a href="index.html#contact">ဆက်သွယ်ရန်</a></li>
+            </ul>
+            <div class="mobile-menu">☰</div>
+        </div>
+    </nav>
+
+    <!-- Flight Service Section -->
+    <section class="flight-service">
+        <h2 class="section-title">ကျွန်ုပ်တို့၏ လေယာဉ် ဝန်ဆောင်မှု</h2>
+        <p class="section-subtitle">ဗုဒ္ဓဂယာ နှင့် ဘုရားဖူးခရီးစဉ်များအတွက် အဆင်သင့် လေယာဉ် ဝန်ဆောင်မှုများ</p>
+
+        <div class="flight-grid">
+            <!-- Flight 1: MAI -->
+            <div class="flight-card">
+                <div class="flight-image">
+                    <img src="https://kimi-web-img.moonshot.cn/img/www.maiair.com/e77c064e9d9f18d87ef5abb893f916362a6d1376.png" alt="MAI Myanmar Airways International">
+                    <span class="flight-badge">အထူး</span>
+                </div>
+                <div class="flight-info">
+                    <h3>MAI - Myanmar Airways International</h3>
+                    <p class="flight-type">Airbus A320 - International</p>
+                    <div class="route-info">
+                        <p><strong>လမ်းကြောင်း:</strong> ရန်ကုန် ↔ ဘန်ကောက် ↔ ကိုးကတ္တား/ဗုဒ္ဓဂယာ</p>
+                        <p><strong>ခရီးအချိန်:</strong> ~4-5 နာရီ (with transit)</p>
+                    </div>
+                    <ul class="flight-features">
+                        <li>Business Class & Economy Class</li>
+                        <li>In-flight Meal</li>
+                        <li>Free Baggage Allowance (30kg)</li>
+                        <li>Entertainment System</li>
+                        <li>Comfortable Seating</li>
+                        <li>Professional Service</li>
+                    </ul>
+                    <div class="flight-price">
+                        <span class="price">စျေးနှုန်း: အထူး</span>
+                        <p class="price-note">ရက်အလိုက် / Season အလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>
+                </div>
+            </div>
+
+            <!-- Flight 2: Air India -->
+            <div class="flight-card">
+                <div class="flight-image">
+                    <img src="https://kimi-web-img.moonshot.cn/img/assets.airtrfx.com/35d54d6833dca8e87d29da18e80059b758bc6e8d.jpg" alt="Air India Boeing 787">
+                    <span class="flight-badge">လူကြိုက်များဆုံး</span>
+                </div>
+                <div class="flight-info">
+                    <h3>Air India</h3>
+                    <p class="flight-type">Boeing 787 Dreamliner - International</p>
+                    <div class="route-info">
+                        <p><strong>လမ်းကြောင်း:</strong> ရန်ကုန် ↔ ဒေလီ ↔ ဗုဒ္ဓဂယာ</p>
+                        <p><strong>ခရီးအချိန်:</strong> ~5-6 နာရီ (with transit)</p>
+                    </div>
+                    <ul class="flight-features">
+                        <li>Premium Economy & Economy</li>
+                        <li>Indian & International Meals</li>
+                        <li>Free Baggage (30kg)</li>
+                        <li>WiFi Onboard</li>
+                        <li>USB Charging</li>
+                        <li>Wide Seat Pitch</li>
+                    </ul>
+                    <div class="flight-price">
+                        <span class="price">စျေးနှုန်း: သက်သာသည်</span>
+                        <p class="price-note">ရက်အလိုက် / Season အလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>
+                </div>
+            </div>
+
+            <!-- Flight 3: Myanmar National Airlines -->
+            <div class="flight-card">
+                <div class="flight-image">
+                    <img src="https://kimi-web-img.moonshot.cn/img/i0.wp.com/20d2bead8d1f3f9ed83fbcd8e358c39911565ea5.jpg" alt="Myanmar National Airlines">
+                </div>
+                <div class="flight-info">
+                    <h3>Myanmar National Airlines</h3>
+                    <p class="flight-type">Boeing 737-800 - Domestic/International</p>
+                    <div class="route-info">
+                        <p><strong>လမ်းကြောင်း:</strong> ရန်ကုန် ↔ ဘန်ကောက် / ဒေလီ</p>
+                        <p><strong>ခရီးအချိန်:</strong> ~2-3 နာရီ (Direct)</p>
+                    </div>
+                    <ul class="flight-features">
+                        <li>Economy Class</li>
+                        <li>In-flight Snack & Meal</li>
+                        <li>Free Baggage (20kg)</li>
+                        <li>Experienced Crew</li>
+                        <li>On-time Performance</li>
+                        <li>Affordable Price</li>
+                    </ul>
+                    <div class="flight-price">
+                        <span class="price">စျေးနှုန်း: အရမ်းသက်သာ</span>
+                        <p class="price-note">ရက်အလိုက် / Season အလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>
+                </div>
+            </div>
+
+            <!-- Flight 4: Air KBZ ATR 72-600 -->
+            <div class="flight-card">
+                <div class="flight-image">
+                    <img src="https://kimi-web-img.moonshot.cn/img/i0.wp.com/a76eb3a68e812339845ffc0d342c90c99a522482.jpg" alt="Air KBZ ATR 72-600">
+                </div>
+                <div class="flight-info">
+                    <h3>Air KBZ - ATR 72-600</h3>
+                    <p class="flight-type">Turboprop - Domestic/Regional</p>
+                    <div class="route-info">
+                        <p><strong>လမ်းကြောင်း:</strong> ပြည်တွင်း မြို့များအကြား</p>
+                        <p><strong>ခရီးအချိန်:</strong> ~1-2 နာရီ (Domestic)</p>
+                    </div>
+                    <ul class="flight-features">
+                        <li>Economy Class</li>
+                        <li>Light Snack</li>
+                        <li>Free Baggage (15kg)</li>
+                        <li>Short Flight Time</li>
+                        <li>Regional Connectivity</li>
+                        <li>Budget Friendly</li>
+                    </ul>
+                    <div class="flight-price">
+                        <span class="price">စျေးနှုန်း: စေ့စေ့စပ်စပ်</span>
+                        <p class="price-note">အုပ်စုအလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>
+                </div>
+            </div>
+
+            <!-- Flight 5: Air KBZ ATR 72-500 -->
+            <div class="flight-card">
+                <div class="flight-image">
+                    <img src="https://kimi-web-img.moonshot.cn/img/flyawaysimulation.com/37c45441cf8665b67e5a23c16141292e8b9a1293.jpg" alt="Air KBZ ATR 72-500">
+                </div>
+                <div class="flight-info">
+                    <h3>Air KBZ - ATR 72-500</h3>
+                    <p class="flight-type">Turboprop - Domestic/Regional</p>
+                    <div class="route-info">
+                        <p><strong>လမ်းကြောင်း:</strong> ပြည်တွင်း မြို့များအကြား</p>
+                        <p><strong>ခရီးအချိန်:</strong> ~1-2 နာရီ (Domestic)</p>
+                    </div>
+                    <ul class="flight-features">
+                        <li>Economy Class</li>
+                        <li>Light Snack</li>
+                        <li>Free Baggage (15kg)</li>
+                        <li>Reliable Service</li>
+                        <li>Multiple Daily Flights</li>
+                        <li>Group Booking Available</li>
+                    </ul>
+                    <div class="flight-price">
+                        <span class="price">စျေးနှုန်း: စေ့စေ့စပ်စပ်</span>
+                        <p class="price-note">အုပ်စုအလိုက် ကွာခြားနိုင်သည်</p>
+                    </div>
+                    <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-book">မှာယူရန်</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Section -->
+        <div class="booking-section">
+            <h3>📞 လေယာဉ် လက်မှတ် မှာယူရန်</h3>
+            <p>ဆက်သွယ်ရန်: <span class="contact-highlight">09-781888840</span></p>
+            <p>Email: <span class="contact-highlight">tourpadaythar@gmail.com</span></p>
+            <p>Facebook: <span class="contact-highlight">Tour Padaythar</span></p>
+            <a href="https://www.facebook.com/tour.padaythar.5" target="_blank" class="btn-messenger">
+                📘 Facebook Messenger ဖြင့် ဆက်သွယ်ရန်
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>🙏 တိုးပဒေသာ (Tour Padaythar) - ဗုဒ္ဓဂယာ နှင့် ဘုရားဖူးခရီးစဉ်များ</p>
+        <p style="font-size: 12px;">© 2026 Tour Padaythar. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
