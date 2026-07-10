@@ -639,7 +639,7 @@
         }
 
         .fade-in {
-            opacity: 0;
+            opacity: 1;
             transform: translateY(30px);
             transition: all 0.6s ease;
         }
