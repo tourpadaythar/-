@@ -14,6 +14,7 @@
 
         document.querySelectorAll('.section').forEach(section => {
             section.classList.add('fade-in');
+                section.classList.add('visible');
             observer.observe(section);
         });
 
